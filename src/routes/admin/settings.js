@@ -57,6 +57,7 @@ router.patch('/', async (req, res, next) => {
       if (key === 'smtpPass') {
         // null=清除;'' 或缺省=保留不动
         if (value === null) entries.smtpPass = ''
+		else if (typeof value === 'string' && value !== '') entries.smtpPass = value  // 非空 = 保存
         continue
       }
       entries[key] = typeof value === 'boolean' ? String(value) : String(value)

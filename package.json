@@ -1,0 +1,55 @@
+{
+  "name": "webssh",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WebSSH 在线服务器管理平台 - 单包单命令(Vue3 前端 + Express/Prisma/ssh2 后端)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "vite build",
+    "dev:server": "node --watch server.js",
+    "dev:vite": "vite",
+    "db:push": "prisma db push",
+    "db:seed": "node prisma/seed.js",
+    "postinstall": "prisma generate",
+    "smoke:ws": "node scripts/smoke-ws.js",
+    "smoke": "bash scripts/smoke.sh"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@prisma/client": "^6.3.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-search": "^0.15.0",
+    "@xterm/addon-web-links": "^0.11.0",
+    "@xterm/xterm": "^5.5.0",
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "element-plus": "^2.9.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.16",
+    "pinia": "^2.3.0",
+    "pino": "^9.6.0",
+    "sanitize-html": "^2.14.0",
+    "ssh2": "^1.16.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "ws": "^8.18.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "prisma": "^6.3.0",
+    "typescript": "~5.6.3",
+    "vite": "^5.4.11"
+  }
+}

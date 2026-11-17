@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id           String               @id @default(cuid())
+  username     String               @unique
+  email        String               @unique
+  passwordHash String
+  role         String               @default("user") // user | admin
+  status       String               @default("active") // active | disabled
+  theme        String? // light | dark | system
+  tokenVersion Int                  @default(0)
+  lastLoginAt  DateTime?
+  createdAt    DateTime             @default(now())
+  profiles     Profile[]
+  resetTokens  PasswordResetToken[]
+}
+
+model Profile {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  host       String
+  port       Int       @default(22)
+  username   String    @default("root")
+  authType   String    @default("password") // password | privateKey
+  password   String? // AES-256-GCM 密文
+  privateKey String? // AES-256-GCM 密文
+  passphrase String? // AES-256-GCM 密文
+  note       String?
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model SiteSetting {
+  key   String @id
+  value String
+}
+
+model NavItem {
+  id        String  @id @default(cuid())
+  label     String
+  url       String
+  sort      Int     @default(0)
+  enabled   Boolean @default(true)
+  newWindow Boolean @default(false)
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  username  String?
+  action    String
+  detail    String?
+  ip        String?
+  createdAt DateTime @default(now())
+}
